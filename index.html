@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Eduardo Garza | RGV Realtor</title>
+  <meta name="description" content="Eduardo Garza — RGV Realtor. Buying or selling in the Rio Grande Valley? Let's connect.">
+  <meta property="og:title" content="Eduardo Garza | RGV Realtor">
+  <meta property="og:description" content="RGV Realtor | Contact me">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0B0B10;
+      --surface:   #12121A;
+      --gold:      #C9A84C;
+      --gold-lt:   #E3C66A;
+      --gold-dk:   #9C7A2E;
+      --text:      #F0EFE8;
+      --muted:     #85847A;
+      --border:    rgba(201,168,76,.22);
+      --radius:    14px;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px env(safe-area-inset-bottom, 24px);
+      padding-top: max(24px, env(safe-area-inset-top, 24px));
+    }
+
+    /* ── container ── */
+    .card {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ── language toggle ── */
+    .lang-toggle {
+      align-self: flex-end;
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+    .lang-toggle button.active {
+      background: var(--gold);
+      color: #0B0B10;
+    }
+    .lang-toggle button:not(.active):hover {
+      color: var(--gold);
+    }
+
+    /* ── profile photo ── */
+    .avatar-wrap {
+      position: relative;
+      width: 104px;
+      height: 104px;
+      margin-bottom: 16px;
+    }
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-lt), var(--gold-dk), var(--gold-lt));
+      z-index: 0;
+    }
+    .avatar {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--bg);
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .avatar .initials {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: .04em;
+      user-select: none;
+    }
+
+    /* ── identity ── */
+    .handle {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold-lt);
+      letter-spacing: .02em;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .tagline {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .phone-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--gold);
+      font-size: 17px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: .03em;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: background .15s, border-color .15s;
+      margin-bottom: 24px;
+    }
+    .phone-link:hover {
+      background: rgba(201,168,76,.08);
+      border-color: var(--gold);
+    }
+    .phone-link svg { flex-shrink: 0; }
+
+    /* ── divider ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 4px 0 20px;
+    }
+
+    /* ── social icons ── */
+    .socials {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      text-decoration: none;
+      transition: background .15s, border-color .15s, transform .12s;
+    }
+    .social-link:hover {
+      background: rgba(201,168,76,.1);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+    .social-link svg { width: 20px; height: 20px; }
+
+    /* ── buttons ── */
+    .btn-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .btn-group + .btn-group {
+      margin-top: 4px;
+    }
+
+    .btn {
+      width: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--gold-lt);
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      transition: background .18s, border-color .18s, color .18s, transform .1s;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      opacity: 0;
+      transition: opacity .18s;
+    }
+    .btn:hover { border-color: var(--gold); transform: translateY(-1px); }
+    .btn:hover::before { opacity: .08; }
+    .btn:active { transform: translateY(0); }
+
+    .btn.btn-primary {
+      border-color: rgba(201,168,76,.4);
+    }
+    .btn.btn-primary:hover {
+      border-color: var(--gold);
+    }
+
+    .btn-label {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .btn-label .main {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gold-lt);
+    }
+    .btn-label .sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .btn-icon {
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      color: var(--gold-dk);
+    }
+    .btn-icon svg { width: 18px; height: 18px; display: block; }
+
+    /* ── footer ── */
+    .footer {
+      margin-top: 32px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: .04em;
+    }
+
+    @media (prefers-color-scheme: light) {
+      /* Keep dark regardless — brand choice */
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Language toggle -->
+  <div class="lang-toggle">
+    <button onclick="setLang('en')" class="active" id="btn-en">EN</button>
+    <button onclick="setLang('es')" id="btn-es">ES</button>
+  </div>
+
+  <!-- Profile photo -->
+  <div class="avatar-wrap">
+    <div class="avatar">
+      <!-- Replace src with real photo path when Eduardo sends it -->
+      <!-- <img src="photo.jpg" alt="Eduardo Garza"> -->
+      <span class="initials">EG</span>
+    </div>
+  </div>
+
+  <!-- Handle & identity -->
+  <p class="handle">@Eduardo.RgvRealtor</p>
+
+  <p class="tagline">
+    <span data-en="RGV Realtor | Contact me" data-es="Agente RGV | Contáctame">RGV Realtor | Contact me</span>
+  </p>
+
+  <!-- Click-to-call -->
+  <a class="phone-link" href="tel:+19566415119" aria-label="Call Eduardo">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l1.12-.9a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    956-641-5119
+  </a>
+
+  <div class="divider"></div>
+
+  <!-- Social icons -->
+  <div class="socials">
+    <!-- Replace href with real profile URLs -->
+    <a class="social-link" href="https://facebook.com/PLACEHOLDER" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+    <a class="social-link" href="https://instagram.com/PLACEHOLDER" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>
+    </a>
+    <a class="social-link" href="https://tiktok.com/@PLACEHOLDER" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
+    </a>
+    <a class="social-link" href="mailto:PLACEHOLDER@email.com" aria-label="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Primary CTAs -->
+  <div class="btn-group">
+    <!--
+      CRM hook: when ready, replace onclick with:
+      fetch('/api/leads', { method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ source: 'link-in-bio', intent: 'buyer' }) })
+        .then(() => window.location.href = 'YOUR_BUYER_FORM_URL')
+    -->
+    <button class="btn btn-primary" data-crm-action="buyer-inquiry" onclick="handleBtn(this, '#')">
+      <span class="btn-label">
+        <span class="main" data-en="Buying a home?" data-es="¿Comprando una casa?">Buying a home?</span>
+        <span class="sub" data-en="I'll help you find the right one" data-es="Te ayudo a encontrar la indicada">I'll help you find the right one</span>
+      </span>
+      <span class="btn-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </span>
+    </button>
+
+    <!--
+      CRM hook: replace onclick with:
+      fetch('/api/leads', { method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ source: 'link-in-bio', intent: 'seller' }) })
+        .then(() => window.location.href = 'YOUR_SELLER_FORM_URL')
+    -->
+    <button class="btn btn-primary" data-crm-action="seller-inquiry" onclick="handleBtn(this, '#')">
+      <span class="btn-label">
+        <span class="main" data-en="Selling a home?" data-es="¿Vendiendo tu casa?">Selling a home?</span>
+        <span class="sub" data-en="Get a free market analysis" data-es="Obtén un análisis de mercado gratis">Get a free market analysis</span>
+      </span>
+      <span class="btn-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      </span>
+    </button>
+  </div>
+
+  <!-- Secondary CTAs -->
+  <div class="btn-group">
+    <a class="btn" href="tel:+19566415119">
+      <span class="btn-label">
+        <span class="main" data-en="Hop on a quick call" data-es="Hablemos rápido">Hop on a quick call</span>
+      </span>
+      <span class="btn-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l1.12-.9a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </span>
+    </a>
+
+    <!-- Replace href with real website URL -->
+    <a class="btn" href="https://YOURWEBSITE.com" target="_blank" rel="noopener">
+      <span class="btn-label">
+        <span class="main" data-en="My website" data-es="Mi sitio web">My website</span>
+      </span>
+      <span class="btn-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </span>
+    </a>
+  </div>
+
+  <footer class="footer">
+    <span data-en="© 2026 Eduardo Garza · RGV Realtor" data-es="© 2026 Eduardo Garza · Agente RGV">© 2026 Eduardo Garza · RGV Realtor</span>
+  </footer>
+
+</div>
+
+<script>
+  const PLACEHOLDERS = {
+    'https://facebook.com/PLACEHOLDER': true,
+    'https://instagram.com/PLACEHOLDER': true,
+    'https://tiktok.com/@PLACEHOLDER': true,
+    'mailto:PLACEHOLDER@email.com': true,
+    'https://YOURWEBSITE.com': true,
+  };
+
+  function handleBtn(btn, url) {
+    const action = btn.getAttribute('data-crm-action');
+    // ── CRM hook (Phase 2) ──────────────────────────────────────────────────
+    // Uncomment and update when the CRM endpoint is live:
+    //
+    // fetch('https://YOUR-CRM-URL/api/leads', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ source: 'link-in-bio', intent: action })
+    // }).then(() => { if (url !== '#') window.location.href = url; });
+    //
+    // ───────────────────────────────────────────────────────────────────────
+    if (url && url !== '#') window.location.href = url;
+  }
+
+  function setLang(lang) {
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = el.dataset[lang];
+    });
+    try { localStorage.setItem('bio-lang', lang); } catch(e) {}
+  }
+
+  // Auto-detect language on load
+  (function () {
+    let lang = 'en';
+    try { lang = localStorage.getItem('bio-lang') || lang; } catch(e) {}
+    if (lang === 'en' && navigator.language && navigator.language.startsWith('es')) lang = 'es';
+    if (lang !== 'en') setLang(lang);
+  })();
+</script>
+</body>
+</html>
