@@ -326,6 +326,177 @@
       text-align: center;
       letter-spacing: .04em;
     }
+
+    /* ── modals ── */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal.open { display: flex; }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,22,52,.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+    .modal-sheet {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      max-height: 90vh;
+      background: var(--white);
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: slideUp .26s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(60px); opacity: 0; }
+      to   { transform: translateY(0);   opacity: 1; }
+    }
+    .modal-header {
+      background: var(--navy);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.6);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px 6px;
+      transition: color .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .modal-close:hover { color: var(--white); }
+    .modal-body {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px 20px 32px;
+      flex: 1;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--gray-lt);
+      border-radius: 10px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      color: var(--navy);
+      background: var(--bg);
+      outline: none;
+      transition: border-color .15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--navy); }
+    .form-group textarea { min-height: 76px; resize: vertical; }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23071634' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+    .radio-group { display: flex; gap: 8px; }
+    .radio-option { flex: 1; }
+    .radio-option input[type="radio"] { display: none; }
+    .radio-option label {
+      display: block;
+      text-align: center;
+      padding: 10px 6px;
+      border: 1.5px solid var(--gray-lt);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--graphite);
+      cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s;
+      text-transform: none;
+      letter-spacing: normal;
+      margin-bottom: 0;
+    }
+    .radio-option input:checked + label {
+      border-color: var(--navy);
+      background: var(--navy);
+      color: var(--white);
+    }
+    .form-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background .15s, opacity .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .form-submit:hover { background: var(--navy-2); }
+    .form-submit:disabled { opacity: .55; cursor: not-allowed; }
+    .form-success {
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .form-success .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #E8F5E9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: #2E7D32;
+    }
+    .form-success h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .form-success p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.5;
+    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
@@ -454,35 +625,291 @@
   </footer>
 
   </div><!-- /body-section -->
+<!-- ── Buyer form modal ─────────────────────────────────────────────────── -->
+<div id="modal-buyer" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-buyer-title">
+  <div class="modal-backdrop" onclick="closeModal('buyer')"></div>
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 id="modal-buyer-title" class="modal-title" data-en="Buying a home?" data-es="¿Comprando una casa?">Buying a home?</h2>
+      <button class="modal-close" onclick="closeModal('buyer')" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-buyer" novalidate>
+        <!--
+          SETUP: go to formspree.io → sign up free → New Form
+          Paste the endpoint in ENDPOINTS.buyer in the script below.
+          CRM swap: change ENDPOINTS.buyer to your CRM URL — field names become JSON keys.
+        -->
+        <input type="hidden" name="_subject" value="NEW BUYER LEAD – Eduardo RGV Realtor">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="form-group">
+          <label data-en="Name *" data-es="Nombre *">Name *</label>
+          <input type="text" name="name" required autocomplete="name"
+                 data-placeholder-en="Your full name" data-placeholder-es="Tu nombre completo"
+                 placeholder="Your full name">
+        </div>
+
+        <div class="form-group">
+          <label data-en="Phone *" data-es="Teléfono *">Phone *</label>
+          <input type="tel" name="phone" required autocomplete="tel"
+                 data-placeholder-en="956-000-0000" data-placeholder-es="956-000-0000"
+                 placeholder="956-000-0000">
+        </div>
+
+        <div class="form-group">
+          <label data-en="What area are you looking in?" data-es="¿En qué área buscas?">What area are you looking in?</label>
+          <input type="text" name="area_interest"
+                 data-placeholder-en="McAllen, Edinburg, Mission…" data-placeholder-es="McAllen, Edinburg, Mission…"
+                 placeholder="McAllen, Edinburg, Mission…">
+        </div>
+
+        <div class="form-group">
+          <label data-en="Price range" data-es="Rango de precio">Price range</label>
+          <select name="price_range">
+            <option value="" data-en="Select a range…" data-es="Selecciona un rango…">Select a range…</option>
+            <option value="under-150k"  data-en="Under $150K"    data-es="Menos de $150K">Under $150K</option>
+            <option value="150k-250k"   data-en="$150K – $250K"  data-es="$150K – $250K">$150K – $250K</option>
+            <option value="250k-350k"   data-en="$250K – $350K"  data-es="$250K – $350K">$250K – $350K</option>
+            <option value="350k-500k"   data-en="$350K – $500K"  data-es="$350K – $500K">$350K – $500K</option>
+            <option value="500k-plus"   data-en="$500K+"         data-es="$500K+">$500K+</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-en="Pre-approved?" data-es="¿Tienes preaprobación?">Pre-approved?</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="preapproved" id="pre-yes" value="Yes">
+              <label for="pre-yes" data-en="Yes" data-es="Sí">Yes</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="preapproved" id="pre-no" value="No">
+              <label for="pre-no" data-en="No" data-es="No">No</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="preapproved" id="pre-notsure" value="Not sure">
+              <label for="pre-notsure" data-en="Not sure" data-es="No estoy seguro">Not sure</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label data-en="Timeline" data-es="¿Para cuándo?">Timeline</label>
+          <select name="timeline">
+            <option value=""             data-en="When do you want to buy?"  data-es="¿Cuándo quieres comprar?">When do you want to buy?</option>
+            <option value="asap"         data-en="ASAP"                      data-es="Inmediatamente">ASAP</option>
+            <option value="1-3-months"   data-en="1–3 months"                data-es="1–3 meses">1–3 months</option>
+            <option value="3-6-months"   data-en="3–6 months"                data-es="3–6 meses">3–6 months</option>
+            <option value="exploring"    data-en="Just exploring"             data-es="Solo explorando">Just exploring</option>
+          </select>
+        </div>
+
+        <button type="submit" class="form-submit"
+                data-en="Send my info →" data-es="Enviar mi info →">Send my info →</button>
+      </form>
+      <div id="form-buyer-success" class="form-success hidden">
+        <div class="success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 data-en="Got it!" data-es="¡Recibido!">Got it!</h3>
+        <p data-en="Eduardo will reach out to you shortly." data-es="Eduardo te contactará pronto.">Eduardo will reach out to you shortly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Seller form modal ────────────────────────────────────────────────── -->
+<div id="modal-seller" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-seller-title">
+  <div class="modal-backdrop" onclick="closeModal('seller')"></div>
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h2 id="modal-seller-title" class="modal-title" data-en="Selling a home?" data-es="¿Vendiendo tu casa?">Selling a home?</h2>
+      <button class="modal-close" onclick="closeModal('seller')" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-seller" novalidate>
+        <input type="hidden" name="_subject" value="NEW SELLER LEAD – Eduardo RGV Realtor">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="form-group">
+          <label data-en="Name *" data-es="Nombre *">Name *</label>
+          <input type="text" name="name" required autocomplete="name"
+                 data-placeholder-en="Your full name" data-placeholder-es="Tu nombre completo"
+                 placeholder="Your full name">
+        </div>
+
+        <div class="form-group">
+          <label data-en="Phone *" data-es="Teléfono *">Phone *</label>
+          <input type="tel" name="phone" required autocomplete="tel"
+                 data-placeholder-en="956-000-0000" data-placeholder-es="956-000-0000"
+                 placeholder="956-000-0000">
+        </div>
+
+        <div class="form-group">
+          <label data-en="Property address" data-es="Dirección de la propiedad">Property address</label>
+          <input type="text" name="property_address" autocomplete="street-address"
+                 data-placeholder-en="123 Main St, McAllen TX" data-placeholder-es="123 Calle Principal, McAllen TX"
+                 placeholder="123 Main St, McAllen TX">
+        </div>
+
+        <div class="form-group">
+          <label data-en="Why are you selling?" data-es="¿Por qué quieres vender?">Why are you selling?</label>
+          <textarea name="reason_selling"
+                    data-placeholder-en="Moving, downsizing, investment…" data-placeholder-es="Mudanza, inversión, jubilación…"
+                    placeholder="Moving, downsizing, investment…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label data-en="How soon?" data-es="¿Para cuándo?">How soon?</label>
+          <select name="timeline">
+            <option value=""           data-en="Select…"        data-es="Selecciona…">Select…</option>
+            <option value="asap"       data-en="ASAP"           data-es="Inmediatamente">ASAP</option>
+            <option value="1-3-months" data-en="1–3 months"     data-es="1–3 meses">1–3 months</option>
+            <option value="3-6-months" data-en="3–6 months"     data-es="3–6 meses">3–6 months</option>
+            <option value="exploring"  data-en="Just exploring"  data-es="Solo explorando">Just exploring</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-en="Property condition" data-es="Estado de la propiedad">Property condition</label>
+          <select name="property_condition">
+            <option value=""            data-en="Select…"            data-es="Selecciona…">Select…</option>
+            <option value="move-in"     data-en="Move-in ready"      data-es="Lista para entrar">Move-in ready</option>
+            <option value="light-work"  data-en="Needs light work"   data-es="Necesita trabajo ligero">Needs light work</option>
+            <option value="major-work"  data-en="Needs major work"   data-es="Necesita trabajo mayor">Needs major work</option>
+          </select>
+        </div>
+
+        <button type="submit" class="form-submit"
+                data-en="Send my info →" data-es="Enviar mi info →">Send my info →</button>
+      </form>
+      <div id="form-seller-success" class="form-success hidden">
+        <div class="success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 data-en="Got it!" data-es="¡Recibido!">Got it!</h3>
+        <p data-en="Eduardo will reach out to you shortly." data-es="Eduardo te contactará pronto.">Eduardo will reach out to you shortly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- /card -->
 
 <script>
+  // ── FORMSPREE ENDPOINTS ───────────────────────────────────────────────────
+  // 1. Go to formspree.io → sign up free → New Form (create two separate forms)
+  // 2. Replace BUYER_FORM_ID and SELLER_FORM_ID with the IDs from your dashboard
+  // 3. CRM swap: change these two URLs only — field names become the JSON keys
+  const ENDPOINTS = {
+    buyer:  'https://formspree.io/f/BUYER_FORM_ID',
+    seller: 'https://formspree.io/f/SELLER_FORM_ID',
+  };
+  // ─────────────────────────────────────────────────────────────────────────
+
+  let _lang = 'en';
+
   function handleBtn(btn, url) {
     const action = btn.getAttribute('data-crm-action');
-    // ── CRM hook (Phase 2) ──────────────────────────────────────────────────
-    // Uncomment and update when the CRM endpoint is live:
-    //
+    if (action === 'buyer-inquiry')  { openModal('buyer');  return; }
+    if (action === 'seller-inquiry') { openModal('seller'); return; }
+    // ── CRM hook (Phase 2) ────────────────────────────────────────────────
     // fetch('https://YOUR-CRM-URL/api/leads', {
     //   method: 'POST',
     //   headers: { 'Content-Type': 'application/json' },
     //   body: JSON.stringify({ source: 'link-in-bio', intent: action })
     // }).then(() => { if (url !== '#') window.location.href = url; });
-    //
-    // ───────────────────────────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────
     if (url && url !== '#') window.location.href = url;
   }
 
+  function openModal(type) {
+    // Reset to clean state each time
+    const form    = document.getElementById('form-'    + type);
+    const success = document.getElementById('form-' + type + '-success');
+    const btn     = form.querySelector('.form-submit');
+    form.reset();
+    form.classList.remove('hidden');
+    success.classList.add('hidden');
+    btn.disabled    = false;
+    btn.textContent = btn.dataset[_lang] || btn.dataset.en;
+    // Clear any checked radios
+    form.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+
+    document.getElementById('modal-' + type).classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+      const first = form.querySelector('input[type="text"], input[type="tel"]');
+      if (first) first.focus();
+    }, 280);
+  }
+
+  function closeModal(type) {
+    document.getElementById('modal-' + type).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal('buyer'); closeModal('seller'); }
+  });
+
+  ['buyer', 'seller'].forEach(type => {
+    document.getElementById('form-' + type).addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn  = form.querySelector('.form-submit');
+
+      if (!form.querySelector('[name="name"]').value.trim() ||
+          !form.querySelector('[name="phone"]').value.trim()) {
+        alert(_lang === 'es' ? 'Por favor ingresa tu nombre y teléfono.' : 'Please enter your name and phone number.');
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.textContent = _lang === 'es' ? 'Enviando…' : 'Sending…';
+
+      try {
+        const resp = await fetch(ENDPOINTS[type], {
+          method:  'POST',
+          body:    new FormData(form),
+          headers: { 'Accept': 'application/json' },
+        });
+        if (resp.ok) {
+          form.classList.add('hidden');
+          document.getElementById('form-' + type + '-success').classList.remove('hidden');
+          setTimeout(() => closeModal(type), 3200);
+        } else {
+          btn.disabled    = false;
+          btn.textContent = btn.dataset[_lang] || btn.dataset.en;
+          alert(_lang === 'es'
+            ? 'Algo salió mal. Intenta de nuevo o escríbele directamente a Eduardo.'
+            : 'Something went wrong. Please try again or text Eduardo directly.');
+        }
+      } catch {
+        btn.disabled    = false;
+        btn.textContent = btn.dataset[_lang] || btn.dataset.en;
+        alert(_lang === 'es'
+          ? 'Error de conexión. Escríbele a Eduardo al 956-641-5119.'
+          : 'Connection error. Text Eduardo at 956-641-5119.');
+      }
+    });
+  });
+
   function setLang(lang) {
+    _lang = lang;
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     document.getElementById('btn-es').classList.toggle('active', lang === 'es');
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-en]').forEach(el => {
       el.textContent = el.dataset[lang];
     });
+    document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+      el.placeholder = lang === 'es' ? el.dataset.placeholderEs : el.dataset.placeholderEn;
+    });
     try { localStorage.setItem('bio-lang', lang); } catch(e) {}
   }
 
-  // Auto-detect language on load
   (function () {
     let lang = 'en';
     try { lang = localStorage.getItem('bio-lang') || lang; } catch(e) {}
